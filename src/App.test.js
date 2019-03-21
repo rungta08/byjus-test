@@ -1,9 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme';
+import '../src/setupTests';
 import App from './App';
+import {findByTestAttr} from '../Utils/helper';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+const setUp = (props={})=>{
+  const component = shallow(<App {...props}/>);
+  return component;
+}
+
+describe('App Component', ()=>{
+
+  let component;
+  beforeEach(()=>{
+    component = setUp();
+  });
+
+  it('should render without crash', ()=>{
+    const wrapper = findByTestAttr(component, 'AppComponent');
+    expect(wrapper.length).toBe(1);
+  });
+
 });
